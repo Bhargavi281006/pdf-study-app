@@ -34,6 +34,7 @@
             <button
                 class="menu-btn"
                 id="menuBtn"
+                type="button"
             >
                 ☰
             </button>
@@ -56,11 +57,21 @@
             </span>
 
 
+            <!-- PROFILE BUTTON -->
+
             <button
                 class="profile-btn"
                 id="profileBtn"
+                type="button"
             >
-                👤
+
+                <span
+                    class="profile-avatar"
+                    id="profileAvatar"
+                >
+                    👤
+                </span>
+
             </button>
 
         </div>
@@ -91,6 +102,7 @@
                 <button
                     class="side-item active"
                     data-section="home"
+                    type="button"
                 >
                     🏠
                     <span>Home</span>
@@ -100,6 +112,7 @@
                 <button
                     class="side-item"
                     data-section="materials"
+                    type="button"
                 >
                     📚
                     <span>My Materials</span>
@@ -109,6 +122,7 @@
                 <button
                     class="side-item"
                     data-section="summaries"
+                    type="button"
                 >
                     📝
                     <span>Summaries</span>
@@ -118,30 +132,10 @@
                 <button
                     class="side-item"
                     data-section="quizzes"
+                    type="button"
                 >
                     🧠
                     <span>Quizzes</span>
-                </button>
-
-
-                <hr>
-
-
-                <button
-                    class="side-item"
-                    data-section="settings"
-                >
-                    ⚙️
-                    <span>Settings</span>
-                </button>
-
-
-                <button
-                    class="side-item"
-                    id="logoutBtn"
-                >
-                    🚪
-                    <span>Logout</span>
                 </button>
 
 
@@ -158,7 +152,9 @@
         <main class="dashboard-content">
 
 
-            <!-- HOME SECTION -->
+            <!-- =========================
+                 HOME SECTION
+            ========================== -->
 
             <section
                 id="homeSection"
@@ -175,7 +171,7 @@
                         </p>
 
 
-                        <h1>
+                        <h1 id="dashboardWelcomeTitle">
                             Welcome back! 👋
                         </h1>
 
@@ -187,11 +183,10 @@
                     </div>
 
 
-                    <!-- ONLY UPLOAD BUTTON -->
-
                     <button
                         class="upload-main-btn"
                         id="uploadMainBtn"
+                        type="button"
                     >
                         + Upload PDF
                     </button>
@@ -205,7 +200,10 @@
                 <section class="quick-actions">
 
 
-                    <div class="quick-card">
+                    <div
+                        class="quick-card"
+                        id="quickUploadCard"
+                    >
 
                         <div class="quick-icon">
                             📄
@@ -286,7 +284,9 @@
 
 
 
-                <!-- MATERIALS -->
+                <!-- =========================
+                     MATERIALS
+                ========================== -->
 
                 <section
                     class="materials-section"
@@ -340,7 +340,7 @@
 
 
 
-                    <!-- MATERIAL CARDS WILL APPEAR HERE -->
+                    <!-- MATERIAL CARDS -->
 
                     <div
                         class="materials-grid"
@@ -459,68 +459,14 @@
             </section>
 
 
-
-            <!-- =========================
-                 SETTINGS SECTION
-            ========================== -->
-
-            <section
-                id="settingsSection"
-                class="dashboard-section hidden-section"
-            >
-
-                <div class="page-heading">
-
-                    <p class="small-heading">
-                        ACCOUNT
-                    </p>
-
-
-                    <h1>
-                        Settings ⚙️
-                    </h1>
-
-
-                    <p>
-                        Manage your PDF Study Assistant account.
-                    </p>
-
-                </div>
-
-
-                <div class="settings-card">
-
-                    <h3>
-                        Account
-                    </h3>
-
-
-                    <p>
-                        Your account is protected using
-                        JWT authentication.
-                    </p>
-
-
-                    <button
-                        class="logout-settings-btn"
-                        id="settingsLogout"
-                    >
-                        Logout
-                    </button>
-
-                </div>
-
-            </section>
-
-
-        </main>
+    </main>
 
     </div>
 
 
 
     <!-- =========================
-         HIDDEN FILE INPUT
+         HIDDEN PDF FILE INPUT
     ========================== -->
 
     <input
@@ -532,39 +478,166 @@
 
 
 
-    <!-- =========================
-         PROFILE POPUP
-    ========================== -->
+    <!-- =================================================
+         PROFILE EDIT PANEL
+    ================================================== -->
 
     <div
-        class="profile-popup"
-        id="profilePopup"
+        class="profile-modal"
+        id="profileModal"
+        style="display: none;"
     >
 
-        <div class="profile-icon-large">
-            👤
+        <div class="profile-modal-overlay">
+
+
+            <div class="profile-modal-card">
+
+
+                <!-- CLOSE BUTTON -->
+
+                <button
+                    type="button"
+                    class="profile-close-btn"
+                    id="profileCloseBtn"
+                >
+                    ×
+                </button>
+
+
+                <!-- PROFILE PICTURE -->
+
+                <div class="profile-edit-picture">
+
+                    <div
+                        class="profile-large-avatar"
+                        id="profileLargeAvatar"
+                    >
+                        👤
+                    </div>
+
+
+                    <label
+                        for="profileImageInput"
+                        class="change-picture-btn"
+                    >
+                        ✏️ Change picture
+                    </label>
+
+
+                    <input
+                        type="file"
+                        id="profileImageInput"
+                        accept="image/*"
+                        hidden
+                    >
+
+                </div>
+
+
+
+                <!-- PROFILE TITLE -->
+
+                <h2>
+                    My Profile
+                </h2>
+
+
+                <p class="profile-description">
+                    Personalize your study space
+                </p>
+
+
+
+                <!-- NAME -->
+
+                <div class="profile-field">
+
+                    <label for="profileNameInput">
+                        Your name
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="profileNameInput"
+                        placeholder="Enter your name"
+                        maxlength="50"
+                    >
+
+                </div>
+
+
+
+                <!-- EMAIL / ACCOUNT INFORMATION -->
+
+                <div class="profile-account-info">
+
+                    <div>
+                        <span>📚</span>
+
+                        <div>
+                            <strong>
+                                PDF Study Assistant
+                            </strong>
+
+                            <small>
+                                Your personal study workspace
+                            </small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SAVE -->
+
+                <button
+                    type="button"
+                    class="profile-save-btn"
+                    id="profileSaveBtn"
+                >
+                    💾 Save Changes
+                </button>
+
+
+
+                <!-- MORE OPTIONS -->
+
+                <div class="profile-more-section">
+
+                    <p>
+                        More
+                    </p>
+
+
+                    <button
+                        type="button"
+                        class="profile-option-btn"
+                        id="profileLogoutBtn"
+                    >
+                        🚪 Log out
+                    </button>
+
+                </div>
+
+
+            </div>
+
         </div>
-
-
-        <h3>
-            Student
-        </h3>
-
-
-        <p>
-            PDF Study Assistant
-        </p>
-
-
-        <button id="popupLogout">
-            Logout
-        </button>
 
     </div>
 
 
 
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
     <script src="dashboard.js"></script>
+
 
 </body>
 

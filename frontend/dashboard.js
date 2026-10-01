@@ -7,9 +7,9 @@ console.log("Dashboard JavaScript loaded");
 const API_URL = "http://127.0.0.1:8000";
 
 
-// -----------------------------------------------------
+// =====================================================
 // CHECK LOGIN
-// -----------------------------------------------------
+// =====================================================
 
 const accessToken = localStorage.getItem("access_token");
 
@@ -18,267 +18,810 @@ if (!accessToken) {
 }
 
 
-// -----------------------------------------------------
+// =====================================================
 // GET HTML ELEMENTS
-// -----------------------------------------------------
+// =====================================================
 
-const sideItems = document.querySelectorAll(".side-item[data-section]");
+const sideItems =
+    document.querySelectorAll(".side-item[data-section]");
 
-const homeSection = document.getElementById("homeSection");
-const summariesSection = document.getElementById("summariesSection");
-const quizzesSection = document.getElementById("quizzesSection");
-const settingsSection = document.getElementById("settingsSection");
+const homeSection =
+    document.getElementById("homeSection");
 
-const uploadMainBtn = document.getElementById("uploadMainBtn");
-const pdfInput = document.getElementById("pdfInput");
+const summariesSection =
+    document.getElementById("summariesSection");
 
-const materialsGrid = document.getElementById("materialsGrid");
-const emptyMaterials = document.getElementById("emptyMaterials");
+const quizzesSection =
+    document.getElementById("quizzesSection");
 
-const profileBtn = document.getElementById("profileBtn");
-const profilePopup = document.getElementById("profilePopup");
+const uploadMainBtn =
+    document.getElementById("uploadMainBtn");
 
-const logoutBtn = document.getElementById("logoutBtn");
-const popupLogout = document.getElementById("popupLogout");
-const settingsLogout = document.getElementById("settingsLogout");
+const pdfInput =
+    document.getElementById("pdfInput");
 
-const menuBtn = document.getElementById("menuBtn");
-const sidebar = document.getElementById("sidebar");
+const materialsGrid =
+    document.getElementById("materialsGrid");
+
+const emptyMaterials =
+    document.getElementById("emptyMaterials");
+
+const menuBtn =
+    document.getElementById("menuBtn");
+
+const sidebar =
+    document.getElementById("sidebar");
 
 
-// -----------------------------------------------------
-// SHOW DASHBOARD SECTIONS
-// -----------------------------------------------------
+// =====================================================
+// PROFILE ELEMENTS
+// =====================================================
 
-function showSection(sectionName) {
+const profileBtn =
+    document.getElementById("profileBtn");
 
-    console.log("Opening section:", sectionName);
+const profileModal =
+    document.getElementById("profileModal");
 
-    if (homeSection) {
-        homeSection.style.display = "none";
+const profileCloseBtn =
+    document.getElementById("profileCloseBtn");
+
+const profileNameInput =
+    document.getElementById("profileNameInput");
+
+const profileSaveBtn =
+    document.getElementById("profileSaveBtn");
+
+const profileImageInput =
+    document.getElementById("profileImageInput");
+
+const changePictureBtn =
+    document.getElementById("changePictureBtn");
+
+const profileLargeAvatar =
+    document.getElementById("profileLargeAvatar");
+
+const profileAvatar =
+    document.getElementById("profileAvatar");
+
+const profileLogoutBtn =
+    document.getElementById("profileLogoutBtn");
+
+const welcomeUser =
+    document.getElementById("welcomeUser");
+
+const dashboardWelcomeTitle =
+    document.getElementById("dashboardWelcomeTitle");
+
+
+// =====================================================
+// PROFILE DATA
+// =====================================================
+
+let savedProfileName =
+    localStorage.getItem("profile_name");
+
+let savedProfileImage =
+    localStorage.getItem("profile_image");
+
+
+// =====================================================
+// LOAD PROFILE
+// =====================================================
+
+function loadProfile() {
+
+    console.log("Loading profile...");
+
+    if (!savedProfileName) {
+        savedProfileName = "Student";
     }
 
-    if (summariesSection) {
-        summariesSection.style.display = "none";
+    if (profileNameInput) {
+        profileNameInput.value =
+            savedProfileName;
     }
 
-    if (quizzesSection) {
-        quizzesSection.style.display = "none";
+    if (welcomeUser) {
+        welcomeUser.textContent =
+            "Welcome, " + savedProfileName;
     }
 
-    if (settingsSection) {
-        settingsSection.style.display = "none";
+    if (dashboardWelcomeTitle) {
+        dashboardWelcomeTitle.textContent =
+            "Welcome back, " +
+            savedProfileName +
+            "! 👋";
     }
 
-    if (sectionName === "home" && homeSection) {
-        homeSection.style.display = "block";
-    }
+    if (savedProfileImage) {
 
-    if (sectionName === "materials" && homeSection) {
+        if (profileAvatar) {
+            profileAvatar.innerHTML =
+                `<img src="${savedProfileImage}" alt="Profile picture">`;
+        }
 
-        homeSection.style.display = "block";
+        if (profileLargeAvatar) {
+            profileLargeAvatar.innerHTML =
+                `<img src="${savedProfileImage}" alt="Profile picture">`;
+        }
 
-        const materialsSection =
-            document.getElementById("materialsSection");
+    } else {
 
-        if (materialsSection) {
-            materialsSection.scrollIntoView({
-                behavior: "smooth"
-            });
+        if (profileAvatar) {
+            profileAvatar.textContent = "👤";
+        }
+
+        if (profileLargeAvatar) {
+            profileLargeAvatar.textContent = "👤";
         }
     }
-
-    if (sectionName === "summaries" && summariesSection) {
-        summariesSection.style.display = "block";
-    }
-
-    if (sectionName === "quizzes" && quizzesSection) {
-        quizzesSection.style.display = "block";
-    }
-
-    if (sectionName === "settings" && settingsSection) {
-        settingsSection.style.display = "block";
-    }
-
-    sideItems.forEach(function(item) {
-
-        item.classList.remove("active");
-
-        if (item.dataset.section === sectionName) {
-            item.classList.add("active");
-        }
-
-    });
 }
 
 
-// -----------------------------------------------------
-// SIDEBAR BUTTONS
-// -----------------------------------------------------
+// =====================================================
+// OPEN PROFILE
+// =====================================================
 
-sideItems.forEach(function(item) {
+if (profileBtn && profileModal) {
 
-    item.addEventListener("click", function() {
+    profileBtn.addEventListener(
+        "click",
+        function(event) {
 
-        showSection(item.dataset.section);
+            event.stopPropagation();
 
-    });
-
-});
-
-
-// -----------------------------------------------------
-// QUICK CARDS
-// -----------------------------------------------------
-
-const quickCards =
-    document.querySelectorAll(".quick-card[data-section]");
-
-quickCards.forEach(function(card) {
-
-    card.addEventListener("click", function() {
-
-        showSection(card.dataset.section);
-
-    });
-
-});
-
-
-// -----------------------------------------------------
-// UPLOAD BUTTON
-// -----------------------------------------------------
-
-if (uploadMainBtn && pdfInput) {
-
-    uploadMainBtn.addEventListener("click", function() {
-
-        console.log("Upload button clicked");
-
-        pdfInput.click();
-
-    });
-
-}
-
-
-// -----------------------------------------------------
-// PDF UPLOAD
-// -----------------------------------------------------
-
-if (pdfInput) {
-
-    pdfInput.addEventListener("change", async function() {
-
-        const file = pdfInput.files[0];
-
-        if (!file) {
-            return;
-        }
-
-        if (!file.name.toLowerCase().endsWith(".pdf")) {
-
-            alert("Please select a PDF file.");
-
-            pdfInput.value = "";
-
-            return;
-        }
-
-        console.log("Selected PDF:", file.name);
-
-        uploadMainBtn.textContent = "Uploading...";
-        uploadMainBtn.disabled = true;
-
-        const formData = new FormData();
-
-        formData.append("file", file);
-
-        try {
-
-            const response = await fetch(
-                API_URL + "/materials/upload",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Authorization":
-                            "Bearer " + accessToken
-                    },
-
-                    body: formData
-                }
+            console.log(
+                "Profile button clicked"
             );
 
-            const data = await response.json();
+            profileModal.style.display =
+                "block";
 
-            console.log("Upload response:", data);
+            loadProfile();
+        }
+    );
+}
 
-            if (response.ok) {
 
-                alert("PDF uploaded successfully!");
+// =====================================================
+// CLOSE PROFILE BUTTON
+// =====================================================
 
-                addMaterialCard(data);
+if (profileCloseBtn && profileModal) {
 
-            } else {
+    profileCloseBtn.addEventListener(
+        "click",
+        function() {
+
+            profileModal.style.display =
+                "none";
+
+        }
+    );
+}
+
+
+// =====================================================
+// CLOSE PROFILE WHEN CLICKING OUTSIDE
+// =====================================================
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        if (!profileModal || !profileBtn) {
+            return;
+        }
+
+        const clickedInsideProfile =
+            profileModal.contains(event.target);
+
+        const clickedProfileButton =
+            profileBtn.contains(event.target);
+
+        if (
+            !clickedInsideProfile &&
+            !clickedProfileButton
+        ) {
+
+            profileModal.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+
+// =====================================================
+// CHANGE PROFILE PICTURE
+// =====================================================
+
+if (changePictureBtn && profileImageInput) {
+
+    changePictureBtn.addEventListener(
+        "click",
+        function() {
+
+            console.log(
+                "Change picture clicked"
+            );
+
+            profileImageInput.click();
+
+        }
+    );
+}
+
+
+// =====================================================
+// PROFILE IMAGE SELECTED
+// =====================================================
+
+if (profileImageInput) {
+
+    profileImageInput.addEventListener(
+        "change",
+        function() {
+
+            const file =
+                profileImageInput.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            if (!file.type.startsWith("image/")) {
 
                 alert(
-                    data.detail ||
-                    "PDF upload failed."
+                    "Please select an image."
+                );
+
+                profileImageInput.value =
+                    "";
+
+                return;
+            }
+
+            console.log(
+                "Profile image selected:",
+                file.name
+            );
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                function(event) {
+
+                    const imageData =
+                        event.target.result;
+
+                    savedProfileImage =
+                        imageData;
+
+                    if (profileLargeAvatar) {
+
+                        profileLargeAvatar.innerHTML =
+                            `<img src="${imageData}" alt="Profile picture">`;
+
+                    }
+
+                    if (profileAvatar) {
+
+                        profileAvatar.innerHTML =
+                            `<img src="${imageData}" alt="Profile picture">`;
+
+                    }
+
+                };
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+}
+
+
+// =====================================================
+// SAVE PROFILE
+// =====================================================
+
+if (profileSaveBtn) {
+
+    profileSaveBtn.addEventListener(
+        "click",
+        function() {
+
+            console.log(
+                "Saving profile..."
+            );
+
+            let newName =
+                profileNameInput
+                    ? profileNameInput.value.trim()
+                    : "";
+
+            if (!newName) {
+                newName = "Student";
+            }
+
+            savedProfileName =
+                newName;
+
+            localStorage.setItem(
+                "profile_name",
+                savedProfileName
+            );
+
+            if (savedProfileImage) {
+
+                localStorage.setItem(
+                    "profile_image",
+                    savedProfileImage
                 );
 
             }
 
-        } catch (error) {
+            loadProfile();
 
-            console.error(
-                "Upload error:",
-                error
-            );
+            if (profileModal) {
+
+                profileModal.style.display =
+                    "none";
+
+            }
 
             alert(
-                "Could not connect to FastAPI server."
+                "Profile updated successfully!"
             );
 
         }
+    );
+}
 
-        uploadMainBtn.textContent = "+ Upload PDF";
-        uploadMainBtn.disabled = false;
 
-        pdfInput.value = "";
+// =====================================================
+// LOGOUT
+// =====================================================
 
-    });
+function logout() {
+
+    console.log(
+        "Logging out..."
+    );
+
+    localStorage.removeItem(
+        "access_token"
+    );
+
+    window.location.href =
+        "index.html";
+}
+
+
+if (profileLogoutBtn) {
+
+    profileLogoutBtn.addEventListener(
+        "click",
+        logout
+    );
 
 }
 
 
-// -----------------------------------------------------
-// CREATE MATERIAL CARD
-// -----------------------------------------------------
+// =====================================================
+// SHOW DASHBOARD SECTIONS
+// =====================================================
 
-function addMaterialCard(data) {
+function showSection(sectionName) {
+
+    console.log(
+        "Opening section:",
+        sectionName
+    );
+
+    if (homeSection) {
+        homeSection.style.display =
+            "none";
+    }
+
+    if (summariesSection) {
+        summariesSection.style.display =
+            "none";
+    }
+
+    if (quizzesSection) {
+        quizzesSection.style.display =
+            "none";
+    }
+
+
+    // HOME
+    if (
+        sectionName === "home" &&
+        homeSection
+    ) {
+
+        homeSection.style.display =
+            "block";
+
+    }
+
+
+    // MATERIALS
+    if (
+        sectionName === "materials" &&
+        homeSection
+    ) {
+
+        homeSection.style.display =
+            "block";
+
+        const materialsSection =
+            document.getElementById(
+                "materialsSection"
+            );
+
+        if (materialsSection) {
+
+            materialsSection.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+    }
+
+
+    // SUMMARIES
+    if (
+        sectionName === "summaries" &&
+        summariesSection
+    ) {
+
+        summariesSection.style.display =
+            "block";
+
+    }
+
+
+    // QUIZZES
+    if (
+        sectionName === "quizzes" &&
+        quizzesSection
+    ) {
+
+        quizzesSection.style.display =
+            "block";
+
+    }
+
+
+    // ACTIVE SIDEBAR ITEM
+    sideItems.forEach(
+        function(item) {
+
+            item.classList.remove(
+                "active"
+            );
+
+            if (
+                item.dataset.section ===
+                sectionName
+            ) {
+
+                item.classList.add(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+}
+
+
+// =====================================================
+// SIDEBAR BUTTONS
+// =====================================================
+
+sideItems.forEach(
+    function(item) {
+
+        item.addEventListener(
+            "click",
+            function() {
+
+                showSection(
+                    item.dataset.section
+                );
+
+            }
+        );
+
+    }
+);
+
+
+// =====================================================
+// QUICK CARDS
+// =====================================================
+
+const quickCards =
+    document.querySelectorAll(
+        ".quick-card[data-section]"
+    );
+
+quickCards.forEach(
+    function(card) {
+
+        card.addEventListener(
+            "click",
+            function() {
+
+                showSection(
+                    card.dataset.section
+                );
+
+            }
+        );
+
+    }
+);
+
+
+// =====================================================
+// QUICK UPLOAD CARD
+// =====================================================
+
+const quickUploadCard =
+    document.getElementById(
+        "quickUploadCard"
+    );
+
+if (quickUploadCard && pdfInput) {
+
+    quickUploadCard.addEventListener(
+        "click",
+        function() {
+
+            pdfInput.click();
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// UPLOAD BUTTON
+// =====================================================
+
+if (uploadMainBtn && pdfInput) {
+
+    uploadMainBtn.addEventListener(
+        "click",
+        function() {
+
+            console.log(
+                "Upload button clicked"
+            );
+
+            pdfInput.click();
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// PDF UPLOAD
+// =====================================================
+
+if (pdfInput) {
+
+    pdfInput.addEventListener(
+        "change",
+        async function() {
+
+            const file =
+                pdfInput.files[0];
+
+            if (!file) {
+                return;
+            }
+
+
+            // Check PDF
+            if (
+                !file.name
+                    .toLowerCase()
+                    .endsWith(".pdf")
+            ) {
+
+                alert(
+                    "Please select a PDF file."
+                );
+
+                pdfInput.value = "";
+
+                return;
+
+            }
+
+
+            console.log(
+                "Selected PDF:",
+                file.name
+            );
+
+
+            if (uploadMainBtn) {
+
+                uploadMainBtn.textContent =
+                    "Uploading...";
+
+                uploadMainBtn.disabled =
+                    true;
+
+            }
+
+
+            const formData =
+                new FormData();
+
+            formData.append(
+                "file",
+                file
+            );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        API_URL +
+                        "/materials/upload",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Authorization":
+                                    "Bearer " +
+                                    accessToken
+                            },
+
+                            body: formData
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "Upload response:",
+                    data
+                );
+
+
+                if (response.ok) {
+
+                    alert(
+                        "PDF uploaded successfully!"
+                    );
+
+                    addMaterialCard(
+                        data,
+                        true
+                    );
+
+                } else {
+
+                    if (
+                        response.status ===
+                        401
+                    ) {
+
+                        localStorage.removeItem(
+                            "access_token"
+                        );
+
+                        window.location.href =
+                            "index.html";
+
+                        return;
+
+                    }
+
+                    alert(
+                        data.detail ||
+                        "PDF upload failed."
+                    );
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "Upload error:",
+                    error
+                );
+
+                alert(
+                    "Could not connect to FastAPI server."
+                );
+
+            }
+
+
+            if (uploadMainBtn) {
+
+                uploadMainBtn.textContent =
+                    "+ Upload PDF";
+
+                uploadMainBtn.disabled =
+                    false;
+
+            }
+
+            pdfInput.value = "";
+
+        }
+    );
+}
+
+
+// =====================================================
+// CREATE MATERIAL CARD
+// =====================================================
+
+function addMaterialCard(
+    data,
+    putFirst = true
+) {
 
     if (!materialsGrid) {
         return;
     }
 
+
     if (emptyMaterials) {
-        emptyMaterials.style.display = "none";
+
+        emptyMaterials.style.display =
+            "none";
+
     }
 
-    const card =
-        document.createElement("div");
 
-    card.className = "material-card";
+    const card =
+        document.createElement(
+            "div"
+        );
+
+    card.className =
+        "material-card";
+
 
     card.innerHTML = `
-        <div class="material-file-icon">📄</div>
 
-        <h3>${data.filename}</h3>
+        <div class="material-file-icon">
+            📄
+        </div>
+
+        <h3>
+            ${data.filename}
+        </h3>
 
         <p>
             Extracted text:
-            ${data.text_length} characters
+            ${data.text_length}
+            characters
         </p>
 
         <div class="material-actions">
@@ -286,42 +829,202 @@ function addMaterialCard(data) {
             <button
                 type="button"
                 class="summary-button"
-                data-id="${data.material_id}">
+                data-id="${data.material_id}"
+            >
                 ✨ Summary
             </button>
 
             <button
                 type="button"
                 class="quiz-button"
-                data-id="${data.material_id}">
+                data-id="${data.material_id}"
+            >
                 🧠 Quiz
             </button>
 
+            <button
+                type="button"
+                class="delete-material-btn"
+                data-id="${data.material_id}"
+            >
+                🗑 Remove
+            </button>
+
         </div>
+
     `;
 
-    materialsGrid.prepend(card);
+
+    if (putFirst) {
+
+        materialsGrid.prepend(
+            card
+        );
+
+    } else {
+
+        materialsGrid.appendChild(
+            card
+        );
+
+    }
+
 }
 
 
-// -----------------------------------------------------
-// SUMMARY AND QUIZ BUTTONS
-// -----------------------------------------------------
+// =====================================================
+// LOAD SAVED MATERIALS
+// =====================================================
+
+async function loadMaterials() {
+
+    console.log(
+        "Loading saved materials..."
+    );
+
+
+    if (!materialsGrid) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/materials",
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " +
+                            accessToken
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Materials response:",
+            data
+        );
+
+
+        if (!response.ok) {
+
+            console.error(
+                "Could not load materials:",
+                data
+            );
+
+
+            if (
+                response.status ===
+                401
+            ) {
+
+                localStorage.removeItem(
+                    "access_token"
+                );
+
+                window.location.href =
+                    "index.html";
+
+            }
+
+            return;
+
+        }
+
+
+        materialsGrid.innerHTML =
+            "";
+
+
+        if (
+            !Array.isArray(data) ||
+            data.length === 0
+        ) {
+
+            if (emptyMaterials) {
+
+                emptyMaterials.style.display =
+                    "block";
+
+            }
+
+            return;
+
+        }
+
+
+        if (emptyMaterials) {
+
+            emptyMaterials.style.display =
+                "none";
+
+        }
+
+
+        data.forEach(
+            function(material) {
+
+                addMaterialCard(
+                    material,
+                    false
+                );
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Error loading materials:",
+            error
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// SUMMARY / QUIZ / DELETE BUTTONS
+// =====================================================
 
 if (materialsGrid) {
 
     materialsGrid.addEventListener(
         "click",
-        function(event) {
+        async function(event) {
 
             const summaryButton =
-                event.target.closest(".summary-button");
+                event.target.closest(
+                    ".summary-button"
+                );
 
             const quizButton =
-                event.target.closest(".quiz-button");
+                event.target.closest(
+                    ".quiz-button"
+                );
+
+            const deleteButton =
+                event.target.closest(
+                    ".delete-material-btn"
+                );
 
 
+            // =================================================
             // SUMMARY
+            // =================================================
 
             if (summaryButton) {
 
@@ -333,6 +1036,7 @@ if (materialsGrid) {
                     materialId
                 );
 
+
                 if (materialId) {
 
                     window.location.href =
@@ -342,10 +1046,13 @@ if (materialsGrid) {
                 }
 
                 return;
+
             }
 
 
+            // =================================================
             // QUIZ
+            // =================================================
 
             if (quizButton) {
 
@@ -357,6 +1064,7 @@ if (materialsGrid) {
                     materialId
                 );
 
+
                 if (materialId) {
 
                     window.location.href =
@@ -365,93 +1073,188 @@ if (materialsGrid) {
 
                 }
 
+                return;
+
+            }
+
+
+            // =================================================
+            // DELETE PDF
+            // =================================================
+
+            if (deleteButton) {
+
+                const materialId =
+                    deleteButton.dataset.id;
+
+
+                if (!materialId) {
+                    return;
+                }
+
+
+                const confirmed =
+                    confirm(
+                        "Are you sure you want to remove this PDF?"
+                    );
+
+
+                if (!confirmed) {
+                    return;
+                }
+
+
+                console.log(
+                    "Deleting material:",
+                    materialId
+                );
+
+
+                // Temporarily disable button
+                deleteButton.disabled =
+                    true;
+
+                deleteButton.textContent =
+                    "Removing...";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            API_URL +
+                            "/materials/" +
+                            materialId,
+                            {
+                                method: "DELETE",
+
+                                headers: {
+                                    "Authorization":
+                                        "Bearer " +
+                                        accessToken
+                                }
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    console.log(
+                        "Delete response:",
+                        data
+                    );
+
+
+                    // TOKEN EXPIRED
+                    if (
+                        response.status ===
+                        401
+                    ) {
+
+                        localStorage.removeItem(
+                            "access_token"
+                        );
+
+                        window.location.href =
+                            "index.html";
+
+                        return;
+
+                    }
+
+
+                    if (!response.ok) {
+
+                        alert(
+                            data.detail ||
+                            "Could not remove PDF."
+                        );
+
+                        deleteButton.disabled =
+                            false;
+
+                        deleteButton.textContent =
+                            "🗑 Remove";
+
+                        return;
+
+                    }
+
+
+                    // Remove card from screen
+                    const card =
+                        deleteButton.closest(
+                            ".material-card"
+                        );
+
+                    if (card) {
+
+                        card.remove();
+
+                    }
+
+
+                    // Check if there are no PDFs
+                    const remainingCards =
+                        materialsGrid.querySelectorAll(
+                            ".material-card"
+                        );
+
+
+                    if (
+                        remainingCards.length ===
+                        0
+                    ) {
+
+                        if (emptyMaterials) {
+
+                            emptyMaterials.style.display =
+                                "block";
+
+                        }
+
+                    }
+
+
+                    alert(
+                        "PDF removed successfully."
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Delete error:",
+                        error
+                    );
+
+                    alert(
+                        "Could not connect to FastAPI server."
+                    );
+
+
+                    deleteButton.disabled =
+                        false;
+
+                    deleteButton.textContent =
+                        "🗑 Remove";
+
+                }
+
+                return;
+
             }
 
         }
     );
-
 }
 
 
-// -----------------------------------------------------
-// PROFILE POPUP
-// -----------------------------------------------------
-
-if (profileBtn && profilePopup) {
-
-    profileBtn.addEventListener(
-        "click",
-        function() {
-
-            if (
-                profilePopup.style.display ===
-                "block"
-            ) {
-
-                profilePopup.style.display =
-                    "none";
-
-            } else {
-
-                profilePopup.style.display =
-                    "block";
-
-            }
-
-        }
-    );
-
-}
-
-
-// -----------------------------------------------------
-// LOGOUT
-// -----------------------------------------------------
-
-function logout() {
-
-    console.log("Logging out");
-
-    localStorage.removeItem("access_token");
-
-    window.location.href = "index.html";
-
-}
-
-
-if (logoutBtn) {
-
-    logoutBtn.addEventListener(
-        "click",
-        logout
-    );
-
-}
-
-
-if (popupLogout) {
-
-    popupLogout.addEventListener(
-        "click",
-        logout
-    );
-
-}
-
-
-if (settingsLogout) {
-
-    settingsLogout.addEventListener(
-        "click",
-        logout
-    );
-
-}
-
-
-// -----------------------------------------------------
+// =====================================================
 // MOBILE MENU
-// -----------------------------------------------------
+// =====================================================
 
 if (menuBtn && sidebar) {
 
@@ -480,10 +1283,18 @@ if (menuBtn && sidebar) {
 }
 
 
-// -----------------------------------------------------
+// =====================================================
 // START DASHBOARD
-// -----------------------------------------------------
+// =====================================================
 
-showSection("home");
+loadProfile();
 
-console.log("Dashboard is ready!");
+showSection(
+    "home"
+);
+
+loadMaterials();
+
+console.log(
+    "Dashboard is ready!"
+);

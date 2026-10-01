@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Quiz - PDF Study Assistant</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Top Navigation -->
+    <header class="simple-header">
+
+        <button id="backButton" class="back-button">
+            ←
+        </button>
+
+        <div class="header-logo">
+            📚 PDF Study Assistant
+        </div>
+
+        <div class="header-title">
+            AI Quiz
+        </div>
+
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="quiz-page">
+
+        <div class="page-label">
+            AI PRACTICE
+        </div>
+
+        <h1>
+            Practice Quiz 🧠
+        </h1>
+
+        <p class="page-description">
+            Test your understanding of the material with
+            AI-generated questions.
+        </p>
+
+
+        <!-- Loading -->
+        <div id="loadingBox" class="quiz-card">
+
+            <div class="loading-icon">
+                🧠
+            </div>
+
+            <h2>
+                Creating your quiz...
+            </h2>
+
+            <p>
+                AI is reading your PDF and preparing
+                questions for you.
+            </p>
+
+        </div>
+
+
+        <!-- Quiz -->
+        <div id="quizContainer"
+             class="quiz-container"
+             style="display: none;">
+
+            <div class="quiz-header">
+
+                <div>
+                    <span id="questionNumber">
+                        Question 1
+                    </span>
+
+                    <h2 id="questionText">
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div id="optionsContainer"
+                 class="options-container">
+            </div>
+
+
+            <button id="nextButton"
+                    class="primary-button"
+                    style="display: none;">
+
+                Next Question →
+
+            </button>
+
+        </div>
+
+
+        <!-- Result -->
+        <div id="resultContainer"
+             class="result-card"
+             style="display: none;">
+
+            <div class="result-icon">
+                🎉
+            </div>
+
+            <h2>
+                Quiz Complete!
+            </h2>
+
+            <p>
+                Your score
+            </p>
+
+            <div id="score"
+                 class="score">
+                0 / 5
+            </div>
+
+            <button id="dashboardButton"
+                    class="primary-button">
+
+                Back to Dashboard
+
+            </button>
+
+        </div>
+
+
+        <!-- Error -->
+        <div id="errorBox"
+             class="error-card"
+             style="display: none;">
+
+            <h2>
+                ⚠️ Something went wrong
+            </h2>
+
+            <p id="errorMessage"></p>
+
+            <button id="errorDashboardButton"
+                    class="primary-button">
+
+                Back to Dashboard
+
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <script src="quiz.js"></script>
+
+</body>
+
+</html>

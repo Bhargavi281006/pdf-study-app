@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AI Study Summary</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button
+                class="menu-btn"
+                id="backButton"
+                type="button"
+            >
+                ←
+            </button>
+
+            <div class="dashboard-logo">
+                📚 PDF Study Assistant
+            </div>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+            <span class="welcome-user">
+                AI Study Notes
+            </span>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="dashboard-content">
+
+
+        <div class="page-heading">
+
+            <p class="small-heading">
+                AI LEARNING
+            </p>
+
+            <h1>
+                Study Summary ✨
+            </h1>
+
+            <p>
+                Your PDF has been converted into
+                easy-to-understand study notes.
+            </p>
+
+        </div>
+
+
+
+        <!-- LOADING -->
+
+        <div
+            id="loadingBox"
+            class="coming-card"
+        >
+
+            <div>
+                ✨
+            </div>
+
+            <h2>
+                Creating your study notes...
+            </h2>
+
+            <p>
+                AI is reading your PDF and preparing
+                clear notes for you.
+            </p>
+
+        </div>
+
+
+
+        <!-- ERROR -->
+
+        <div
+            id="errorBox"
+            class="coming-card"
+            style="display: none;"
+        >
+
+            <div>
+                ⚠️
+            </div>
+
+            <h2>
+                Unable to create summary
+            </h2>
+
+            <p id="errorMessage">
+                Something went wrong.
+            </p>
+
+            <br>
+
+            <button
+                class="upload-main-btn"
+                id="backToDashboard"
+                type="button"
+            >
+                ← Back to Dashboard
+            </button>
+
+        </div>
+
+
+
+        <!-- SUMMARY -->
+
+        <div
+            id="summaryContainer"
+            style="display: none;"
+        >
+
+            <div class="material-card">
+
+                <div
+                    class="material-file-icon"
+                    id="fileIcon"
+                >
+                    📄
+                </div>
+
+                <h2 id="fileName">
+                    Study Material
+                </h2>
+
+                <p>
+                    AI-generated study notes
+                </p>
+
+            </div>
+
+
+            <br>
+
+
+            <article
+                id="summaryContent"
+                class="settings-card"
+                style="
+                    max-width: 100%;
+                    line-height: 1.8;
+                    white-space: pre-wrap;
+                "
+            >
+            </article>
+
+        </div>
+
+
+    </main>
+
+
+    <script src="summary.js"></script>
+
+</body>
+
+</html>

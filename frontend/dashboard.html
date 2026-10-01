@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dashboard - PDF Study Assistant</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         TOP NAVIGATION
+    ========================== -->
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <button
+                class="menu-btn"
+                id="menuBtn"
+            >
+                ☰
+            </button>
+
+
+            <div class="dashboard-logo">
+                📚 PDF Study Assistant
+            </div>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+            <span
+                class="welcome-user"
+                id="welcomeUser"
+            >
+                Welcome!
+            </span>
+
+
+            <button
+                class="profile-btn"
+                id="profileBtn"
+            >
+                👤
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         DASHBOARD LAYOUT
+    ========================== -->
+
+    <div class="dashboard-layout">
+
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
+
+        <aside
+            class="sidebar"
+            id="sidebar"
+        >
+
+            <nav>
+
+
+                <button
+                    class="side-item active"
+                    data-section="home"
+                >
+                    🏠
+                    <span>Home</span>
+                </button>
+
+
+                <button
+                    class="side-item"
+                    data-section="materials"
+                >
+                    📚
+                    <span>My Materials</span>
+                </button>
+
+
+                <button
+                    class="side-item"
+                    data-section="summaries"
+                >
+                    📝
+                    <span>Summaries</span>
+                </button>
+
+
+                <button
+                    class="side-item"
+                    data-section="quizzes"
+                >
+                    🧠
+                    <span>Quizzes</span>
+                </button>
+
+
+                <hr>
+
+
+                <button
+                    class="side-item"
+                    data-section="settings"
+                >
+                    ⚙️
+                    <span>Settings</span>
+                </button>
+
+
+                <button
+                    class="side-item"
+                    id="logoutBtn"
+                >
+                    🚪
+                    <span>Logout</span>
+                </button>
+
+
+            </nav>
+
+        </aside>
+
+
+
+        <!-- =========================
+             MAIN CONTENT
+        ========================== -->
+
+        <main class="dashboard-content">
+
+
+            <!-- HOME SECTION -->
+
+            <section
+                id="homeSection"
+                class="dashboard-section"
+            >
+
+
+                <div class="dashboard-welcome">
+
+                    <div>
+
+                        <p class="small-heading">
+                            YOUR STUDY SPACE
+                        </p>
+
+
+                        <h1>
+                            Welcome back! 👋
+                        </h1>
+
+
+                        <p>
+                            Continue learning from where you left off.
+                        </p>
+
+                    </div>
+
+
+                    <!-- ONLY UPLOAD BUTTON -->
+
+                    <button
+                        class="upload-main-btn"
+                        id="uploadMainBtn"
+                    >
+                        + Upload PDF
+                    </button>
+
+                </div>
+
+
+
+                <!-- QUICK ACTION CARDS -->
+
+                <section class="quick-actions">
+
+
+                    <div class="quick-card">
+
+                        <div class="quick-icon">
+                            📄
+                        </div>
+
+
+                        <div>
+
+                            <h3>
+                                Upload Material
+                            </h3>
+
+
+                            <p>
+                                Add a PDF to your study library.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="quick-card"
+                        data-section="summaries"
+                    >
+
+                        <div class="quick-icon">
+                            ✨
+                        </div>
+
+
+                        <div>
+
+                            <h3>
+                                AI Summary
+                            </h3>
+
+
+                            <p>
+                                Turn your material into study notes.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="quick-card"
+                        data-section="quizzes"
+                    >
+
+                        <div class="quick-icon">
+                            🧠
+                        </div>
+
+
+                        <div>
+
+                            <h3>
+                                Practice Quiz
+                            </h3>
+
+
+                            <p>
+                                Test what you have learned.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- MATERIALS -->
+
+                <section
+                    class="materials-section"
+                    id="materialsSection"
+                >
+
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <h2>
+                                My Study Materials
+                            </h2>
+
+
+                            <p>
+                                Your uploaded PDFs will appear here.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- EMPTY STATE -->
+
+                    <div
+                        class="empty-materials"
+                        id="emptyMaterials"
+                    >
+
+                        <div class="empty-icon">
+                            📄
+                        </div>
+
+
+                        <h3>
+                            No study materials yet
+                        </h3>
+
+
+                        <p>
+                            Upload your first PDF using the
+                            <strong>+ Upload PDF</strong>
+                            button above.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- MATERIAL CARDS WILL APPEAR HERE -->
+
+                    <div
+                        class="materials-grid"
+                        id="materialsGrid"
+                    >
+
+                    </div>
+
+
+                </section>
+
+
+            </section>
+
+
+
+            <!-- =========================
+                 SUMMARIES SECTION
+            ========================== -->
+
+            <section
+                id="summariesSection"
+                class="dashboard-section hidden-section"
+            >
+
+                <div class="page-heading">
+
+                    <p class="small-heading">
+                        AI LEARNING
+                    </p>
+
+
+                    <h1>
+                        My Summaries ✨
+                    </h1>
+
+
+                    <p>
+                        Your AI-generated study notes will appear here.
+                    </p>
+
+                </div>
+
+
+                <div class="coming-card">
+
+                    <div>
+                        📚
+                    </div>
+
+
+                    <h2>
+                        Your summaries will appear here
+                    </h2>
+
+
+                    <p>
+                        Upload a PDF first, then generate
+                        AI-powered study notes.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 QUIZZES SECTION
+            ========================== -->
+
+            <section
+                id="quizzesSection"
+                class="dashboard-section hidden-section"
+            >
+
+                <div class="page-heading">
+
+                    <p class="small-heading">
+                        TEST YOUR KNOWLEDGE
+                    </p>
+
+
+                    <h1>
+                        My Quizzes 🧠
+                    </h1>
+
+
+                    <p>
+                        Practice questions generated from your
+                        study materials will appear here.
+                    </p>
+
+                </div>
+
+
+                <div class="coming-card">
+
+                    <div>
+                        🧠
+                    </div>
+
+
+                    <h2>
+                        Your quizzes will appear here
+                    </h2>
+
+
+                    <p>
+                        Upload a PDF and generate a quiz
+                        from your study material.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 SETTINGS SECTION
+            ========================== -->
+
+            <section
+                id="settingsSection"
+                class="dashboard-section hidden-section"
+            >
+
+                <div class="page-heading">
+
+                    <p class="small-heading">
+                        ACCOUNT
+                    </p>
+
+
+                    <h1>
+                        Settings ⚙️
+                    </h1>
+
+
+                    <p>
+                        Manage your PDF Study Assistant account.
+                    </p>
+
+                </div>
+
+
+                <div class="settings-card">
+
+                    <h3>
+                        Account
+                    </h3>
+
+
+                    <p>
+                        Your account is protected using
+                        JWT authentication.
+                    </p>
+
+
+                    <button
+                        class="logout-settings-btn"
+                        id="settingsLogout"
+                    >
+                        Logout
+                    </button>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =========================
+         HIDDEN FILE INPUT
+    ========================== -->
+
+    <input
+        type="file"
+        id="pdfInput"
+        accept=".pdf"
+        hidden
+    >
+
+
+
+    <!-- =========================
+         PROFILE POPUP
+    ========================== -->
+
+    <div
+        class="profile-popup"
+        id="profilePopup"
+    >
+
+        <div class="profile-icon-large">
+            👤
+        </div>
+
+
+        <h3>
+            Student
+        </h3>
+
+
+        <p>
+            PDF Study Assistant
+        </p>
+
+
+        <button id="popupLogout">
+            Logout
+        </button>
+
+    </div>
+
+
+
+    <script src="dashboard.js"></script>
+
+</body>
+
+</html>

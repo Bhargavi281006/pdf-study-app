@@ -433,7 +433,7 @@ AI Quiz
 
 The Colab notebook is intended to demonstrate the core PDF OCR → Summary → Quiz pipeline independently from the FastAPI application.
 Colab link:
-PASTE YOUR GOOGLE COLAB LINK HERE
+https://colab.research.google.com/drive/1DH2tpTVVJQf9NV84yw1u1cw_N-tUGNTM?usp=sharing&utm_source=chatgpt.com
 
 21. Requirements
 
